@@ -1,0 +1,74 @@
+<html xmlns:fb="http://ogp.me/ns/fb#">
+    <?php
+    $product = Mage::registry('current_product');
+    if ($product) {
+        $url = $product->getProductUrl();
+        $desc = $product->getDescription();
+        $tittle = $product->getName();
+        $imageUrl = Mage::helper('catalog/image')->init($product, 'small_image');
+        
+    } else {
+             
+        $tittle = Mage::getSingleton('cms/page')->getTitle();
+        $desc = Mage::getSingleton('cms/page')->getContent();
+        $desc = htmlentities(str_replace('{{widget type="fsocial/widget_block" template="fsocial/view.phtml"}}','',$desc));
+        $url = $this->helper('core/url')->getCurrentUrl();             
+        $imageUrl = '';
+    }
+    $likeEnabled = Mage::getStoreConfig('fsocial/like/likemain');
+    $likeshowFaces = Mage::getStoreConfig('fsocial/like/showfaces');
+    $send = Mage::getStoreConfig('fsocial/like/send');
+    if ($likeshowFaces == '1') {
+        $likeshowFaces = 'true';
+    } else {
+        $likeshowFaces = 'false';
+    }
+    if ($send == '1') {
+        $send = 'true';
+    } else {
+        $send = 'false';
+    }
+    $likelayoutStyle = Mage::getStoreConfig('fsocial/like/layoutstyle');
+    $likeverbtoDisplay = Mage::getStoreConfig('fsocial/like/verbtodisplay');
+    $likefont = Mage::getStoreConfig('fsocial/like/font');
+    $likecolorSchema = Mage::getStoreConfig('fsocial/like/colorschema');
+    $likewidth = Mage::getStoreConfig('fsocial/like/width');
+    $shareEnabled = Mage::getStoreConfig('fsocial/share/sharemain');
+    ?>
+
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=213087342100033";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <div style="display: block; font-size: 12px;">
+    <?php if ($shareEnabled) { ?>
+        <div id="share" style="float:left;margin: 10px 0;">
+            <fb:share-button class="meta">
+                <meta name="medium" content="mult"/>
+                <meta name="title" content="<?php echo $tittle; ?>"/>
+                <meta name="description" content='<?php echo $desc; ?>'/>
+                <link rel="image_src" href="<?php echo $imageUrl ?>" />
+                <link rel="target_url" href="<?php echo $url; ?>"/>
+            </fb:share-button>
+        </div>
+    <?php } ?>
+
+
+
+    <?php if ($likeEnabled) { ?>
+        <div id="like" style="margin: 10px 0 10px 5px;float:left;">
+            <fb:like href="<?php echo $productUrl; ?>"  
+                     colorscheme="<?php echo $likecolorSchema; ?>" font="<?php echo $likefont; ?>" 
+                     action="<?php echo $likeverbtoDisplay; ?>" 
+                     layout="<?php echo $likelayoutStyle; ?>" 
+                     send="<?php echo $send; ?>" width="450" 
+                     show_faces="<?php echo $likeshowFaces; ?>"></fb:like>
+        </div>
+    <?php } ?>
+        
+    </div>

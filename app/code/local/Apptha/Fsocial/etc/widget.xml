@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<widgets>
+    <fsocial_widget_block type="fsocial/widget_block" translate="name description" module="fsocial">
+        <name>Fsocial</name>
+        <description>Adds Fsocial Links</description>
+        <parameters>
+            <template translate="label">
+                <label>Template</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <values>
+                    <links translate="label">
+                        <value>fsocial/view.phtml</value>
+                        <label>Fsocial Links</label>
+                    </links>                    
+                </values>
+                <values>                   
+                    <comment translate="label">
+                        <value>fsocial/comment.phtml</value>
+                        <label>Fsocial Comment</label>
+                    </comment>
+                </values>
+            </template>
+        </parameters>
+    </fsocial_widget_block>
+</widgets>

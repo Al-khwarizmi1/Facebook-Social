@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+
+    <default>        
+        <reference name="after_body_start">
+            <block type="fsocial/template" template="fsocial/init.phtml" name="facebook_init" />
+        </reference>
+        <reference name="top.links">
+            <action method="addLink" translate="label title" module="fsocial" ifconfig="customer/fsocial/enabled">
+                <label>Connect with Facebook</label>
+                <url helper="facebook/getConnectUrl"/>
+                <title>Facebook Connect</title>
+                <prepare/>
+                <urlParams/>
+                <position>110</position>
+                <liParams/>
+                <aParams>
+                    <rel>facebook-connect</rel>
+                </aParams>
+            </action>
+        </reference> 
+    </default>
+	
+    <customer_account_login>
+        <reference name="content">
+            <block type="fsocial/template" template="fsocial/login.phtml" name="facebook_login" />
+        </reference>
+    </customer_account_login>
+    
+    <checkout_onepage_index translate="label"> 
+        <update handle="content"/>
+        <reference name="checkout.onepage.login.before">
+            <block type="fsocial/fsocial" template="fsocial/checkoutlogin.phtml" name="facebook_checkoutlogin" />   
+        </reference>
+    </checkout_onepage_index>
+
+    <catalog_product_view>
+        <update handle="content"/>
+        <reference name="product.info.extrahint">
+            <block  type="fsocial/view" template="fsocial/view.phtml" name="facebook_view" />   
+        </reference>
+        <reference name="content">
+            <block  after="_" type="fsocial/view" template="fsocial/comment.phtml" name="facebook_comment" />   
+        </reference>
+    </catalog_product_view>
+</layout>
